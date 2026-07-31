@@ -1,0 +1,48 @@
+﻿# GOD-TIER CLIPBOARD HISTORY
+# Binary data is in ClipboardGodData\Binary. Image previews are in ClipboardGodData\ImagePreviews.
+
+======================================================================
+ID: 1
+Copied: 2026-07-16 10:11:36
+Source:  - 
+Type: Image
+Pinned: 0 | Favorite: 0 | Deleted: 0
+Uses: 0
+Binary: 13.0 KB
+----------------------------------------------------------------------
+
+
+======================================================================
+ID: 2
+Copied: 2026-07-16 10:11:42
+Source: PowerToys.PowerOCR.exe - TextExtractor
+Type: Rich Text
+Pinned: 0 | Favorite: 0 | Deleted: 0
+Uses: 0
+Binary: 252 B
+----------------------------------------------------------------------
+No item selected.
+
+======================================================================
+ID: 3
+Copied: 2026-07-16 10:12:14
+Source: explorer.exe - CLIPBOARD and 2 more tabs - File Explorer [ master ↓0 ↑1 ]
+Type: Rich Text
+Pinned: 0 | Favorite: 0 | Deleted: 0
+Uses: 0
+Binary: 8.3 KB
+----------------------------------------------------------------------
+Error: The control is destroyed.
+
+	777: {
+	778: i := A_Index, item := H[i]
+▶	779: If Pass(item,F.Text) && Match(item,Trim(Q.Value))
+	780: idx.Push(i)
+	781: }
+
+Call stack:
+D:\Training\AG_Training_Umer\AHK Scripts\CLIPBOARD\ClipboardHistoryManager.ahk (779) : [Gui.Control.Prototype.Text.Get] If Pass(item,F.Text) && Match(item,Trim(Q.Value))
+D:\Training\AG_Training_Umer\AHK Scripts\CLIPBOARD\ClipboardHistoryManager.ahk (779) : [Populate] If Pass(item,F.Text) && Match(item,Trim(Q.Value))
+D:\Training\AG_Training_Umer\AHK Scripts\CLIPBOARD\ClipboardHistoryManager.ahk (359) : [Toggle] Populate()
+> !v
+

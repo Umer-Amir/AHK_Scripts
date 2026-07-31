@@ -1,0 +1,20 @@
+﻿# God Clipboard v1
+# NextId=4
+@@GODCLIP@@|1|19|5|81|5|0|0|0|1|1|1|0|1|0|0
+12026-07-16 10:11:36ImageD:\Training\AG_Training_Umer\AHK Scripts\CLIPBOARD\ClipboardGodData\Binary\1.clip133010000
+@@GODCLIP@@|1|19|9|81|3|22|13|49|1|1|1|0|1|0|17
+22026-07-16 10:11:42Rich TextD:\Training\AG_Training_Umer\AHK Scripts\CLIPBOARD\ClipboardGodData\Binary\2.clip252PowerToys.PowerOCR.exeTextExtractorC:\Program Files\PowerToys\PowerToys.PowerOCR.exe0000No item selected.
+@@GODCLIP@@|1|19|9|81|4|12|58|47|1|1|1|0|1|0|612
+32026-07-16 10:12:14Rich TextD:\Training\AG_Training_Umer\AHK Scripts\CLIPBOARD\ClipboardGodData\Binary\3.clip8534explorer.exeCLIPBOARD and 2 more tabs - File Explorer [ master ↓0 ↑1 ]C:\Program Files\AutoHotkey\v2\AutoHotkey64.exe0000Error: The control is destroyed.
+
+	777: {
+	778: i := A_Index, item := H[i]
+▶	779: If Pass(item,F.Text) && Match(item,Trim(Q.Value))
+	780: idx.Push(i)
+	781: }
+
+Call stack:
+D:\Training\AG_Training_Umer\AHK Scripts\CLIPBOARD\ClipboardHistoryManager.ahk (779) : [Gui.Control.Prototype.Text.Get] If Pass(item,F.Text) && Match(item,Trim(Q.Value))
+D:\Training\AG_Training_Umer\AHK Scripts\CLIPBOARD\ClipboardHistoryManager.ahk (779) : [Populate] If Pass(item,F.Text) && Match(item,Trim(Q.Value))
+D:\Training\AG_Training_Umer\AHK Scripts\CLIPBOARD\ClipboardHistoryManager.ahk (359) : [Toggle] Populate()
+> !v

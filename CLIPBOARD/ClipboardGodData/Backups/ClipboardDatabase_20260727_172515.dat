@@ -1,0 +1,41 @@
+﻿# God Clipboard v1
+# NextId=6
+@@GODCLIP@@|1|19|5|81|5|0|0|0|1|1|1|0|1|0|0
+12026-07-16 10:11:36ImageD:\Training\AG_Training_Umer\AHK Scripts\CLIPBOARD\ClipboardGodData\Binary\1.clip133010000
+@@GODCLIP@@|1|19|9|81|3|22|13|49|1|1|1|0|1|0|17
+22026-07-16 10:11:42Rich TextD:\Training\AG_Training_Umer\AHK Scripts\CLIPBOARD\ClipboardGodData\Binary\2.clip252PowerToys.PowerOCR.exeTextExtractorC:\Program Files\PowerToys\PowerToys.PowerOCR.exe0000No item selected.
+@@GODCLIP@@|1|19|9|81|4|12|58|47|1|1|1|0|1|0|612
+32026-07-16 10:12:14Rich TextD:\Training\AG_Training_Umer\AHK Scripts\CLIPBOARD\ClipboardGodData\Binary\3.clip8534explorer.exeCLIPBOARD and 2 more tabs - File Explorer [ master ↓0 ↑1 ]C:\Program Files\AutoHotkey\v2\AutoHotkey64.exe0000Error: The control is destroyed.
+
+	777: {
+	778: i := A_Index, item := H[i]
+▶	779: If Pass(item,F.Text) && Match(item,Trim(Q.Value))
+	780: idx.Push(i)
+	781: }
+
+Call stack:
+D:\Training\AG_Training_Umer\AHK Scripts\CLIPBOARD\ClipboardHistoryManager.ahk (779) : [Gui.Control.Prototype.Text.Get] If Pass(item,F.Text) && Match(item,Trim(Q.Value))
+D:\Training\AG_Training_Umer\AHK Scripts\CLIPBOARD\ClipboardHistoryManager.ahk (779) : [Populate] If Pass(item,F.Text) && Match(item,Trim(Q.Value))
+D:\Training\AG_Training_Umer\AHK Scripts\CLIPBOARD\ClipboardHistoryManager.ahk (359) : [Toggle] Populate()
+> !v
+@@GODCLIP@@|1|19|5|81|5|12|81|23|1|1|1|0|1|19|1542
+42026-07-27 17:24:30FilesD:\Training\AG_Training_Umer\AHK Scripts\CLIPBOARD\ClipboardGodData\Binary\4.clip17734explorer.exeQuality of Life Scripts & Queries and 1 more tab - File Explorer [ master ↓0 ↑0 ]C:\Windows\explorer.exe00022026-07-27 17:25:06D:\Training\AG_Training_Umer\Quality of Life Scripts & Queries\Search Values.sql
+D:\Training\AG_Training_Umer\Quality of Life Scripts & Queries\ssms_automation_positions.json
+D:\Training\AG_Training_Umer\Quality of Life Scripts & Queries\Table Stuff.sql
+D:\Training\AG_Training_Umer\Quality of Life Scripts & Queries\all_finance_entities.mmd
+D:\Training\AG_Training_Umer\Quality of Life Scripts & Queries\Create Entities.py
+D:\Training\AG_Training_Umer\Quality of Life Scripts & Queries\finance_erd.mmd
+D:\Training\AG_Training_Umer\Quality of Life Scripts & Queries\h.html
+D:\Training\AG_Training_Umer\Quality of Life Scripts & Queries\hello.md
+D:\Training\AG_Training_Umer\Quality of Life Scripts & Queries\input_schema.xlsx
+D:\Training\AG_Training_Umer\Quality of Life Scripts & Queries\master_erd.mmd
+D:\Training\AG_Training_Umer\Quality of Life Scripts & Queries\ROW CHECKER.sql
+D:\Training\AG_Training_Umer\Quality of Life Scripts & Queries\run_search_values.py
+D:\Training\AG_Training_Umer\Quality of Life Scripts & Queries\run_search_values_azure_cli.py
+D:\Training\AG_Training_Umer\Quality of Life Scripts & Queries\run_search_values_ssms_gui.py
+D:\Training\AG_Training_Umer\Quality of Life Scripts & Queries\run_search_values_ssms_gui_esc.py
+D:\Training\AG_Training_Umer\Quality of Life Scripts & Queries\Search Values Results.xlsx
+D:\Training\AG_Training_Umer\Quality of Life Scripts & Queries\Search Values SSMS Results.xlsx
+D:\Training\AG_Training_Umer\Quality of Life Scripts & Queries\Search Values.original.sql
+@@GODCLIP@@|1|19|9|81|2|12|53|23|1|1|1|0|1|0|7
+52026-07-27 17:24:53Rich TextD:\Training\AG_Training_Umer\AHK Scripts\CLIPBOARD\ClipboardGodData\Binary\5.clip40explorer.exeTEMP and 2 more tabs - File Explorer [ master ↓0 ↑0 ]C:\Windows\explorer.exe0000Phase 3
