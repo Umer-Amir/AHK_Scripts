@@ -3,3 +3,16 @@
 /_CommandCenter_Backups/*
 
 /AHK_CommandCenter_Settings.ini
+
+/LIST_LOGS.txt
+
+
+
+
+
+
+
+
+
+
+git commit -m "Stop tracking LOGS settings file"
