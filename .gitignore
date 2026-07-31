@@ -1,5 +1,5 @@
 /.env
 
-/_CommandCenter_Backups
+/_CommandCenter_Backups/*
 
-AHK_CommandCenter_Settings.ini
+/AHK_CommandCenter_Settings.ini
