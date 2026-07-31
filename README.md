@@ -13,6 +13,8 @@ Manage scripts from one dashboard, keep a persistent clipboard history, send mes
   <img alt="Status Active" src="https://img.shields.io/badge/Status-Active-6A5ACD?style=for-the-badge">
 </p>
 
+<img src="docs/images/project-showcase.png" alt="AHK Advanced Command Center project showcase" width="100%">
+
 </div>
 
 ---
@@ -28,8 +30,33 @@ The repository also includes:
 - A persistent clipboard manager with text, image, binary, search, filtering, pinning, favorites, recycle-bin restoration, export, and backup support.
 - Two-way PC ↔ phone messaging through **ntfy**.
 - Automatic work-session notifications when Windows is locked or unlocked.
+- **Aurora System Audio Scope**, a dependency-free 60 FPS playback-level visualizer with a custom GDI interface.
 - Text transformation utilities for SQL, Excel, lists, and timestamps.
 - Search, calculation, and autocomplete shortcuts.
+
+---
+
+## 🖼️ Interface gallery
+
+The repository includes polished preview assets under `docs/images/` so the README presents the project visually on GitHub. They are based on the current layouts and behavior of the scripts; each file can later be replaced by a live screenshot without changing the Markdown path.
+
+### AHK Advanced Command Center
+
+<img src="docs/images/command-center.png" alt="AHK Advanced Command Center interface preview" width="100%">
+
+Centralized script discovery, status monitoring, search, favorites, startup control, backups, editing, and process actions.
+
+### Persistent Clipboard Workspace
+
+<img src="docs/images/clipboard-manager.png" alt="Clipboard History Manager interface preview" width="100%">
+
+A searchable clipboard database with filtering, previews, editing, pinning, favorites, restore, export, and backup controls.
+
+### Aurora System Audio Scope
+
+<img src="docs/images/aurora-audio-scope.png" alt="Aurora System Audio Scope interface preview" width="100%">
+
+A frameless, neon-accented 60 FPS playback peak visualizer with gain, pause, reset, topmost, dBFS, FPS, and device information.
 
 ---
 
@@ -43,7 +70,9 @@ flowchart LR
     M --> N[ntfy Messaging]
     M --> P[Pasting Utilities]
     M --> W[Web & General Utilities]
+    M --> A[Aurora Audio Scope]
 
+    A --> CORE[Windows Core Audio + GDI]
     N --> PHONE[Phone / ntfy App]
     N --> ENV[Root .env]
     W --> ENV
@@ -60,11 +89,19 @@ flowchart LR
 ```text
 AHK Scripts/
 ├── LIST.ahk                         # Main command center
-├── .env                             # Local secrets and autocomplete values
+├── Aurora_SystemAudioScope_60FPS_AHKv2_ENHANCED.ahk
+│                                      # Custom 60 FPS system-audio visualizer
+├── .env                             # Local-only secrets and autocomplete values
 ├── .gitignore                       # Prevents private/runtime files being committed
-├── AHK_CommandCenter_Settings.ini   # Favorites, startup choices, editor setting
-├── LIST_LOGS.txt                    # Command-center activity log
+├── AHK_CommandCenter_Settings.ini   # Local favorites, startup choices, editor setting
+├── LIST_LOGS.txt                    # Local command-center activity log
 ├── LICENSE
+├── docs/
+│   └── images/
+│       ├── project-showcase.png
+│       ├── command-center.png
+│       ├── clipboard-manager.png
+│       └── aurora-audio-scope.png
 │
 ├── CLIPBOARD/
 │   ├── ClipboardHistoryManager.ahk  # Persistent clipboard manager
@@ -168,6 +205,14 @@ Alt + Q
 
 The dashboard will scan the project recursively and display the available scripts.
 
+To launch Aurora directly, run:
+
+```text
+Aurora_SystemAudioScope_60FPS_AHKv2_ENHANCED.ahk
+```
+
+Once it is inside the project root, the command center will also discover and manage it automatically.
+
 ---
 
 ## 🎛️ Command Center
@@ -255,6 +300,37 @@ To launch the suite at Windows sign-in:
 
 ---
 
+## 🌌 Aurora System Audio Scope
+
+`Aurora_SystemAudioScope_60FPS_AHKv2_ENHANCED.ahk` is a custom-rendered Windows playback visualizer built entirely with AutoHotkey v2, Windows Core Audio, and GDI. It requires no external libraries.
+
+<img src="docs/images/aurora-audio-scope.png" alt="Aurora System Audio Scope" width="100%">
+
+### Highlights
+
+- Targets **60 FPS** with high-resolution frame pacing and a reusable double-buffered GDI renderer.
+- Reads the peak level of the current default Windows playback endpoint.
+- Reconnects automatically when the default output device changes or the audio interface becomes invalid.
+- Displays the playback-device name, linear peak, dBFS peak, actual FPS, current gain, live/paused state, and topmost state.
+- Uses a frameless near-black interface with teal, cyan, blue, purple, and magenta illumination.
+- Supports mouse and keyboard controls without adding external dependencies.
+
+### Controls
+
+| Control | Action |
+|---|---|
+| Mouse wheel up, `Up`, or `+` | Increase gain |
+| Mouse wheel down, `Down`, or `-` | Decrease gain |
+| `Space` | Pause or resume rendering |
+| `R` | Clear signal history |
+| `T` | Toggle always-on-top |
+| `M` | Minimize the frameless window |
+| `Esc` | Exit |
+
+> Windows `IAudioMeterInformation` exposes playback peak amplitude rather than raw PCM samples. Aurora therefore renders a polished mirrored amplitude envelope, not a sample-accurate oscilloscope or frequency spectrum.
+
+---
+
 ## 📱 ntfy integration
 
 The `NTFY` folder turns ntfy into a lightweight bridge between your Windows PC and phone.
@@ -314,6 +390,7 @@ The `NTFY` folder turns ntfy into a lightweight bridge between your Windows PC a
 |---|---|---|
 | `LIST.ahk` | `Alt + Q` | Opens the AHK Advanced Command Center. |
 | `ClipboardHistoryManager.ahk` | `Alt + V` | Opens or hides persistent clipboard history. |
+| `Aurora_SystemAudioScope_60FPS_AHKv2_ENHANCED.ahk` | Run directly | Opens the 60 FPS system-audio visualizer. |
 | `ntfy.ahk` | `Alt + W` | Opens the PC-to-phone message composer. |
 | `ntfy_listen.ahk` | `Ctrl + Alt + R` | Checks the ntfy topic immediately. |
 | `ntfy_listen.ahk` | `Ctrl + Alt + I` | Opens the received-message history. |
@@ -452,6 +529,7 @@ Favorites and startup selections are stored locally in `AHK_CommandCenter_Settin
 |---|---|
 | Windows 10 or 11 | Entire project |
 | AutoHotkey v2.0+ | All `.ahk` scripts |
+| Windows Core Audio and GDI | Aurora Audio Scope; built into Windows |
 | PowerShell | Calculator and clipboard image support |
 | Internet access | Google Search and ntfy scripts |
 | ntfy subscription/app | Phone messaging features |
@@ -509,6 +587,13 @@ Check the conflict table above and inspect the AutoHotkey tray icons. Two simult
 </details>
 
 <details>
+<summary><strong>Aurora cannot access the playback device</strong></summary>
+
+Confirm that Windows has an active default output device and that audio playback is available. Close and reopen Aurora after switching drivers or reconnecting a USB/Bluetooth audio device. The script will normally reconnect automatically when the default endpoint changes.
+
+</details>
+
+<details>
 <summary><strong>Phone messages are not arriving</strong></summary>
 
 Verify that:
@@ -523,6 +608,26 @@ Verify that:
 
 ---
 
+## 🎨 README media assets
+
+Commit the `docs/images/` folder together with this README. The paths are relative, so they render correctly on GitHub without external hosting.
+
+```powershell
+git add README.md docs/images
+git add Aurora_SystemAudioScope_60FPS_AHKv2_ENHANCED.ahk
+git commit -m "Document Aurora and add UI showcase assets"
+git push
+```
+
+For future updates:
+
+- Keep the existing filenames when replacing preview renders with real screenshots.
+- Capture windows at a consistent 16:9 or wide desktop aspect ratio.
+- Avoid exposing `.env`, clipboard contents, private topics, email addresses, passwords, or local paths in screenshots.
+- Optimize PNG files before committing if individual images become unusually large.
+
+---
+
 ## 🗺️ Suggested roadmap
 
 - [ ] Remove remaining hardcoded paths from `LIST.ahk`.
@@ -531,14 +636,14 @@ Verify that:
 - [ ] Move shared `.env` parsing into one reusable library.
 - [ ] Add authenticated or self-hosted ntfy configuration.
 - [ ] Add optional encrypted local storage for sensitive settings.
-- [ ] Add screenshots or a short demonstration GIF.
+- [ ] Replace preview renders with live screenshots and add a short demonstration GIF.
 - [ ] Add automated syntax checks for every `.ahk` file.
 
 ---
 
 ## 🤝 Contributing
 
-Improvements are welcome. Keep additions modular, use AutoHotkey v2 syntax, add a clear `; Description:` comment, document every global shortcut, and avoid committing machine-specific paths or private runtime data.
+Improvements are welcome. Keep additions modular, use AutoHotkey v2 syntax, add a clear `; Description:` comment, document every global shortcut, and avoid committing machine-specific paths or private runtime data. Store README screenshots and preview renders under `docs/images/` and use relative paths so forks remain portable.
 
 ---
 
