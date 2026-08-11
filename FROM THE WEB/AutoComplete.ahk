@@ -1,107 +1,46 @@
-#Requires AutoHotkey v2.0
-#SingleInstance Force
+﻿#Requires AutoHotkey v2.0
 
-; ============================================================
-; SETTINGS
-; ============================================================
-
-; The shared .env file is one directory above this script.
-global ENV_FILE := A_ScriptDir . "\..\.env"
-
-global AUTOCOMPLETE_EMAIL := LoadEnvValue(
-    "AUTOCOMPLETE_EMAIL",
-    ENV_FILE
-)
-
-global AUTOCOMPLETE_PASSWORD := LoadEnvValue(
-    "AUTOCOMPLETE_PASSWORD",
-    ENV_FILE
-)
-
-global AUTOCOMPLETE_SELECT := LoadEnvValue(
-    "AUTOCOMPLETE_SELECT",
-    ENV_FILE
-)
-
-; ============================================================
-; HOTSTRINGS
-; ============================================================
-
-; Type the trigger and then an ending character such as Space or Enter.
-Hotstring("::;email", TypeEmail)
-Hotstring("::;password", TypePassword)
-Hotstring("::;select", TypeSelectQuery)
-
-TypeEmail(*) {
-    global AUTOCOMPLETE_EMAIL
-    SendText(AUTOCOMPLETE_EMAIL)
+; Universal fast paste helper (Excel-safe)
+PasteText(text) {
+    SavedClip := ClipboardAll()  ; Backup original clipboard state (including formatted text/cells)
+    A_Clipboard := ""            ; Clear clipboard so ClipWait can detect new data
+    A_Clipboard := text
+    ClipWait(1)                  ; Wait up to 1 second for clipboard to register
+    
+    Send("^v")                   ; Execute Paste
+    Sleep(100)                   ; Give Excel time to absorb the paste before restoring clipboard
+    
+    A_Clipboard := SavedClip     ; Restore previous clipboard
 }
 
-TypePassword(*) {
-    global AUTOCOMPLETE_PASSWORD
-    SendText(AUTOCOMPLETE_PASSWORD)
+; Pipeline Variables
+:?*:aa::
+{
+    PasteText("@pipeline().libraryVariables.FinanceFabricEnvironmentConfiguration_Warehouse_Connection.connectionId")
 }
 
-TypeSelectQuery(*) {
-    global AUTOCOMPLETE_SELECT
-    SendText(AUTOCOMPLETE_SELECT)
+:?*:ss::
+{
+    PasteText("@pipeline().libraryVariables.FinanceFabricEnvironmentConfiguration_Workspace_ID")
 }
 
-; ============================================================
-; .ENV SUPPORT
-; ============================================================
+:?*:dd::
+{
+    PasteText("@pipeline().libraryVariables.FinanceFabricEnvironmentConfiguration_Warehouse_ID")
+}
 
-LoadEnvValue(variableName, envFile := "") {
-    if (envFile = "")
-        envFile := A_ScriptDir . "\..\.env"
+:?*:ff::
+{
+    PasteText("@pipeline().libraryVariables.FinanceFabricEnvironmentConfiguration_Warehouse_SQL_Endpoint")
+}
 
-    if !FileExist(envFile)
-        throw Error("Missing .env file: " . envFile)
+; Status Emojis
+:?*:qq::
+{
+    PasteText("✅")
+}
 
-    fileContents := FileRead(envFile, "UTF-8")
-
-    for rawLine in StrSplit(fileContents, "`n", "`r") {
-        ; Also removes a possible UTF-8 BOM from the first line.
-        line := Trim(rawLine, " `t" . Chr(0xFEFF))
-
-        if (line = "")
-            continue
-
-        firstCharacter := SubStr(line, 1, 1)
-        if (firstCharacter = "#" || firstCharacter = ";")
-            continue
-
-        ; Accept both KEY=value and export KEY=value.
-        line := RegExReplace(line, "i)^export\s+", "")
-
-        equalsPosition := InStr(line, "=")
-        if (equalsPosition = 0)
-            continue
-
-        key := Trim(SubStr(line, 1, equalsPosition - 1))
-        if (key != variableName)
-            continue
-
-        value := Trim(SubStr(line, equalsPosition + 1))
-
-        ; Remove matching single or double quotes around the value.
-        if (StrLen(value) >= 2) {
-            firstQuote := SubStr(value, 1, 1)
-            lastQuote := SubStr(value, StrLen(value), 1)
-
-            if (
-                firstQuote = lastQuote
-                && (firstQuote = Chr(34) || firstQuote = "'")
-            ) {
-                value := SubStr(value, 2, StrLen(value) - 2)
-            }
-        }
-
-        if (value = "")
-            throw Error(variableName . " is empty in " . envFile)
-
-        return value
-    }
-
-    throw Error(variableName . " was not found in " . envFile)
+:?*:ww::
+{
+    PasteText("❌")
 }
