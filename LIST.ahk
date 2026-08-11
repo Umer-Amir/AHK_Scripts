@@ -5,16 +5,17 @@
 ; AHK Advanced Command Center
 ; ==========================================================
 
-TargetFolder := "D:\Training\AG_Training_Umer\AHK Scripts"
+; Use the folder containing this command-center script as the root.
+; This keeps the whole AHK Scripts folder portable when it is moved or copied.
+TargetFolder := A_ScriptDir
 
 ; Leave blank to use Notepad.
-; Example:
-; EditorPath := "C:\Users\YOUR_NAME\AppData\Local\Programs\Microsoft VS Code\Code.exe"
+; You can also enter an editor executable through the saved settings.
 EditorPath := ""
 
 SettingsFile := A_ScriptDir "\AHK_CommandCenter_Settings.ini"
 BackupFolder := A_ScriptDir "\_CommandCenter_Backups"
-LogFile := "D:\Training\AG_Training_Umer\AHK Scripts\LIST_LOGS.txt"
+LogFile := A_ScriptDir "\LIST_LOGS.txt"
 
 RunningScripts := Map()
 Scripts := Map()
@@ -1745,10 +1746,10 @@ LoadSettings() {
                 EditorPath := value
         } else if (section = "Favorites") {
             if (value = "1")
-                FavoriteScripts[key] := true
+                FavoriteScripts[ResolveStoredPath(key)] := true
         } else if (section = "Startup") {
             if (value = "1")
-                StartupScripts[key] := true
+                StartupScripts[ResolveStoredPath(key)] := true
         }
     }
 }
@@ -1763,12 +1764,12 @@ SaveSettings() {
 
     text .= "[Favorites]`n"
     for fullPath, _ in FavoriteScripts {
-        text .= fullPath "=1`n"
+        text .= MakePortablePath(fullPath) "=1`n"
     }
 
     text .= "`n[Startup]`n"
     for fullPath, _ in StartupScripts {
-        text .= fullPath "=1`n"
+        text .= MakePortablePath(fullPath) "=1`n"
     }
 
     try {
@@ -1989,6 +1990,29 @@ RenderLogs() {
 ; ==========================================================
 ; UTILITIES
 ; ==========================================================
+
+MakePortablePath(fullPath) {
+    global TargetFolder
+
+    rootPrefix := RTrim(TargetFolder, "\") "\"
+
+    if (InStr(StrLower(fullPath), StrLower(rootPrefix)) = 1)
+        return SubStr(fullPath, StrLen(rootPrefix) + 1)
+
+    return fullPath
+}
+
+
+ResolveStoredPath(storedPath) {
+    global TargetFolder
+
+    ; Keep legacy/external absolute paths intact; resolve portable entries
+    ; relative to the folder where this command center currently resides.
+    if RegExMatch(storedPath, "i)^[A-Z]:\\") || SubStr(storedPath, 1, 2) = "\\"
+        return storedPath
+
+    return RTrim(TargetFolder, "\") "\" LTrim(storedPath, "\")
+}
 
 ShouldSkipScript(fullPath) {
     global BackupFolder
