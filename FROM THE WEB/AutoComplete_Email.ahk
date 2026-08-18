@@ -4,10 +4,8 @@
 
 ; .env is one directory above this script.
 global ENV_FILE := A_ScriptDir "\..\.env"
-global DOUBLE_TAP_MS := 350
 global Config := ""
 global IsSending := false
-global LastTapTimes := Map()
 global ActiveChords := Map()
 global RegisteredHotkeys := Map()
 
@@ -53,15 +51,21 @@ RegisterDefinitions() {
             Hotstring("::;" StrLower(suffix), AutoCompleteHandler.Bind(value))
     }
 
+    ; Native hotstrings reliably handle AA=..., SS=..., etc. The pair is
+    ; erased by AHK itself and the replacement is pasted from the clipboard.
+    ; No ending character is required, and matching remains case-insensitive.
+    for pair, value in Config.DoubleTap
+        Hotstring(":*:" StrLower(pair), AutoCompleteHandler.Bind(value))
+
     ; One physical-only hook per key. Unlike AHK custom combinations, these
     ; hooks do not turn normal letters into prefix keys.
     trackedKeys := Map()
-    for pair, _ in Config.DoubleTap {
-        if RegExMatch(pair, "i)^([A-Z0-9])\1$", &m)
-            trackedKeys[NormalizeKeyName(StrUpper(m[1]))] := true
+    for key, _ in Config.ConsecutiveDouble {
+        ; If AA and DOUBLE A both exist, AA is the unambiguous native
+        ; hotstring and takes precedence for that key.
+        if !Config.DoubleTap.Has(StrUpper(key key))
+            trackedKeys[key] := true
     }
-    for key, _ in Config.ConsecutiveDouble
-        trackedKeys[key] := true
     for _, chord in Config.Chords {
         trackedKeys[chord.Key1] := true
         trackedKeys[chord.Key2] := true
@@ -126,7 +130,7 @@ PasteTextPreservingClipboard(value) {
 }
 
 PhysicalKeyHandler(key, *) {
-    global Config, IsSending, LastTapTimes
+    global Config, IsSending
     if IsSending
         return
 
@@ -134,25 +138,12 @@ PhysicalKeyHandler(key, *) {
     if TryTriggerChord(key)
         return
 
-    now := A_TickCount
-    pair := StrUpper(key key)
     isConsecutive := (StrLower(A_PriorKey) = StrLower(key))
 
-    if (isConsecutive && Config.DoubleTap.Has(pair)
-        && LastTapTimes.Has(key)
-        && (now - LastTapTimes[key]) <= DOUBLE_TAP_MS) {
-        LastTapTimes[key] := 0
-        SetTimer(ReplaceTypedKeys.Bind(2, Config.DoubleTap[pair]), -20)
-        return
-    }
-
     if (isConsecutive && Config.ConsecutiveDouble.Has(key)) {
-        LastTapTimes[key] := 0
         SetTimer(ReplaceTypedKeys.Bind(2, Config.ConsecutiveDouble[key]), -20)
         return
     }
-
-    LastTapTimes[key] := now
 }
 
 TryTriggerChord(pressedKey) {
@@ -291,6 +282,14 @@ ParseEnv() {
             possibleHotkey := HeaderToHotkey(leftSide)
             if (possibleHotkey != "") {
                 parsedDefinitions.Hotkeys[possibleHotkey] := RemoveQuotes(
+                    Trim(SubStr(line, equalsPosition + 1)))
+                continue
+            }
+
+            ; AA=..., SS=..., etc. work anywhere in the file and do not
+            ; depend on the current section heading.
+            if RegExMatch(leftSide, "i)^([A-Z0-9])\1$") {
+                parsedDefinitions.DoubleTap[StrUpper(leftSide)] := RemoveQuotes(
                     Trim(SubStr(line, equalsPosition + 1)))
                 continue
             }
